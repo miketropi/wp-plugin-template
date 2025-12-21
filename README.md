@@ -1,4 +1,4 @@
-# __PLUGIN_NAME__
+# **PLUGIN_NAME**
 
 ...
 
@@ -17,7 +17,7 @@
 
 - **WordPress**: 6.0 or higher
 - **PHP**: 8.2 or higher
-- **Node.js**: Latest LTS version
+- **Node.js**: v24.x (recommended)
 - **Composer**: Latest version
 - **Base Plugin**: Giftflow plugin must be installed and active
 
