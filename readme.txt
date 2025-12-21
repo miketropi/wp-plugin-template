@@ -1,5 +1,5 @@
 === __PLUGIN_NAME__ ===
-Contributors: Giftflow Team
+Contributors: __AUTHOR__
 Tags: ...
 Requires at least: 6.0
 Tested up to: 6.9
