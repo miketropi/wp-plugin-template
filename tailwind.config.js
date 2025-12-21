@@ -1,0 +1,16 @@
+module.exports = {
+  corePlugins: {
+    preflight: false,
+  },
+  content: [
+    './assets/**/*.{ts,tsx,js,jsx}',
+    './index.php',
+    './src/**/*.php',
+    // './**/*.php',
+  ],
+  prefix: '__PLUGIN_SLUG__-',
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};

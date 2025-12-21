@@ -1,0 +1,19 @@
+parameters:
+  level: 5
+
+  paths:
+    - index.php
+    - src
+    - tests
+
+  excludePaths:
+    - vendor
+
+  reportUnmatchedIgnoredErrors: false
+
+  ignoreErrors:
+    - '#Call to undefined function add_action#'
+    - '#Call to undefined function do_action#'
+    - '#Call to undefined function apply_filters#'
+    - '#Call to undefined function esc_.*#'
+    - '#Constant __NAMESPACE___PLUGIN_.* not found#'
