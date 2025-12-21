@@ -1,4 +1,4 @@
-# **PLUGIN_NAME**
+# \***\*PLUGIN_NAME\*\***
 
 ...
 
@@ -48,8 +48,6 @@
    npm run build
    ```
 
-5. Activate the plugin in WordPress admin (requires the base Giftflow plugin to be active first).
-
 ## Development Setup
 
 ### Prerequisites
@@ -57,7 +55,6 @@
 Before starting development, ensure you have:
 
 - A local WordPress development environment
-- The base Giftflow plugin installed and activated
 - All dependencies installed (see [Installation](#installation))
 
 ### Environment Variables
@@ -112,7 +109,7 @@ These hooks are automatically set up when you run `npm install`.
 ## Project Structure
 
 ```
-giftflow-pro/
+__PLUGIN_SLUG__/
 ├── assets/                    # Frontend source assets
 │   ├── components/           # React components
 │   ├── hooks/                # React hooks
@@ -262,7 +259,7 @@ npm run format
 - **ESLint**: Configured in `eslint.config.mjs` (modern flat config format)
 - **Prettier**: Integrated with ESLint for consistent formatting
 - **TypeScript**: Configured in `tsconfig.json` with React JSX support and type management
-- **Tailwind CSS**: Configured in `tailwind.config.js` with `gfpro-` prefix and WordPress-friendly settings
+- **Tailwind CSS**: Configured in `tailwind.config.js` with `__PLUGIN_SLUG__-` prefix and WordPress-friendly settings
 - **PostCSS**: Configured in `postcss.config.js` with Tailwind and Autoprefixer plugins
 
 ### CI/CD
