@@ -19,7 +19,6 @@
 - **PHP**: 8.2 or higher
 - **Node.js**: v24.x (recommended)
 - **Composer**: Latest version
-- **Base Plugin**: Giftflow plugin must be installed and active
 
 ## Installation
 
