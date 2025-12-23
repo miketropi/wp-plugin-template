@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="__PLUGIN_NAME__ Coding Standards">
+  <arg name="extensions" value="php"/>
   <description>Coding standards for __PLUGIN_NAME__ plugin</description>
 
   <arg value="sp"/>
