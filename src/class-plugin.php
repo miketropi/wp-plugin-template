@@ -32,6 +32,7 @@ class Plugin {
 		}
 
 		// load manifest file.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$manifest       = json_decode( file_get_contents( __NAMESPACE___PLUGIN_DIR . 'dist/mix-manifest.json' ), true );
 		$enqueue_script = $manifest['/__PLUGIN_SLUG__.main.bundle.js'];
 		$enqueue_style  = $manifest['/__PLUGIN_SLUG__.main.bundle.css'];

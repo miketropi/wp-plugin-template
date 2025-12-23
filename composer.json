@@ -22,10 +22,8 @@
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "phpstan/extension-installer": true
     },
-    "config": {
-      "platform": {
-        "php": "8.2"
-      }
+    "platform": {
+      "php": "8.2"
     }
   }
 }

@@ -9,8 +9,24 @@
   <file>index.php</file>
   <file>src</file>
 
+  <!-- Include WordPress Coding Standards -->
+  <rule ref="WordPress" />
   <rule ref="WordPress-Core" />
+  <!-- <rule ref="WordPress-Extra" /> -->
   <rule ref="WordPress-Docs" />
+
+  <!-- Disable alignment / cosmetic spacing -->
+  <rule ref="Generic.Formatting.MultipleStatementAlignment">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="WordPress.Arrays.MultipleStatementAlignment">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="Squiz.Commenting.FunctionComment.SpacingAfterParamType">
+    <severity>0</severity>
+  </rule>
 
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
