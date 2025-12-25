@@ -7,8 +7,9 @@
 		"test": "tests"
 	},
 	"scripts": {
-		"dev": "npx mix watch",
+		"dev:watch": "npx mix watch",
 		"dev:block": "npx wp-scripts start",
+		"dev": "npm run dev:watch & npm run dev:block",
 		"build:block": "npx wp-scripts build",
 		"build": "npx mix --production",
 		"prepare": "husky",

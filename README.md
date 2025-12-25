@@ -1,483 +1,806 @@
 # WordPress Plugin Template
 
-A modern, production-ready WordPress plugin template with TypeScript, React, Tailwind CSS, and comprehensive development tools.
+A modern, production-ready WordPress plugin template with TypeScript, React, Tailwind CSS, and comprehensive development tools. Built for developers who want a solid foundation with best practices out of the box.
 
-## Features
+## 🚀 Quick Start
 
-- 🚀 **Modern Stack**: TypeScript, React, Tailwind CSS
-- 🎨 **Gutenberg Blocks**: Built-in support for custom Gutenberg blocks
-- 🛠️ **Development Tools**: ESLint, Prettier, PHPCS, PHPStan
-- 🔄 **Hot Reloading**: BrowserSync and React Refresh for seamless development
-- 📦 **Asset Pipeline**: Laravel Mix for optimized builds
-- ✅ **Code Quality**: Automated linting and formatting with Git hooks
-- 🧪 **Testing**: PHPUnit setup included
+```bash
+# 1. Clone the template
+git clone <repository-url> your-plugin-name
+cd your-plugin-name
 
-## Table of Contents
+# 2. Replace placeholders (see below)
+# 3. Install dependencies
+composer install && npm install
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [Getting Started](#getting-started)
-  - [Step 1: Replace Placeholders](#step-1-replace-placeholders)
-  - [Step 2: Installation](#step-2-installation)
-- [Development Setup](#development-setup)
-- [Project Structure](#project-structure)
+# 4. Start development
+npm run dev
+```
+
+## 📋 Table of Contents
+
+- [Architecture](#architecture)
+- [Setup & Configuration](#setup--configuration)
+- [Development Workflow](#development-workflow)
+- [Plugin Architecture](#plugin-architecture)
 - [Building Assets](#building-assets)
-- [Code Quality](#code-quality)
+- [Gutenberg Blocks](#gutenberg-blocks)
+- [Code Quality & Standards](#code-quality--standards)
 - [Testing](#testing)
-- [Contributing](#contributing)
+- [Extending the Plugin](#extending-the-plugin)
+- [Debugging](#debugging)
 - [Troubleshooting](#troubleshooting)
-- [Additional Resources](#additional-resources)
 
-## Requirements
+## 🏗️ Architecture
 
-- **WordPress**: 6.0 or higher
-- **PHP**: 8.2 or higher
-- **Node.js**: v20.x or higher
-- **Composer**: Latest version
+### Tech Stack
 
-## Getting Started
+- **Backend**: PHP 8.2+ with WordPress Coding Standards
+- **Frontend**: TypeScript + React 19
+- **Styling**: Tailwind CSS with custom prefix
+- **Build Tools**: Laravel Mix (Webpack) + WordPress Scripts
+- **Code Quality**: ESLint, Prettier, PHPCS, PHPStan
+- **Testing**: PHPUnit
+
+### Directory Structure
+
+```
+your-plugin-name/
+├── assets/                    # Frontend source (TypeScript/React)
+│   ├── components/           # React components
+│   ├── hooks/                # Custom React hooks
+│   ├── types/                # TypeScript definitions
+│   ├── script.main.ts        # Main entry point
+│   └── style.css             # Tailwind CSS source
+├── build/                     # Gutenberg blocks build output
+│   └── blocks/               # Compiled block files
+├── dist/                      # Compiled frontend assets
+│   ├── plugin.main.bundle.js
+│   ├── plugin.main.bundle.css
+│   └── mix-manifest.json     # Cache-busting manifest
+├── src/                       # PHP source files
+│   ├── blocks/               # Gutenberg block source
+│   │   ├── blocks.php       # Block registration
+│   │   └── [block-name]/    # Individual blocks
+│   └── class-plugin.php      # Main plugin class
+├── tests/                     # PHPUnit tests
+├── vendor/                    # Composer dependencies
+├── node_modules/              # npm dependencies
+└── index.php                  # Plugin bootstrap
+```
+
+## ⚙️ Setup & Configuration
 
 ### Step 1: Replace Placeholders
 
-Before using this template, you need to replace the following placeholders throughout the codebase:
+The template uses placeholders that must be replaced before use:
 
-- `__PLUGIN_SLUG__` - Your plugin slug (e.g., `my-awesome-plugin`)
-- `__PLUGIN_NAME__` - Your plugin name (e.g., `My Awesome Plugin`)
-- `__NAMESPACE__` - Your PHP namespace (e.g., `MyAwesomePlugin`)
-- `__TEXT_DOMAIN__` - Your text domain for translations (usually same as slug)
-- `__AUTHOR__` - Your name or organization
+| Placeholder       | Description                | Example             |
+| ----------------- | -------------------------- | ------------------- |
+| `__PLUGIN_SLUG__` | Plugin slug (kebab-case)   | `my-awesome-plugin` |
+| `__PLUGIN_NAME__` | Plugin display name        | `My Awesome Plugin` |
+| `__NAMESPACE__`   | PHP namespace (PascalCase) | `MyAwesomePlugin`   |
+| `__TEXT_DOMAIN__` | Translation text domain    | `my-awesome-plugin` |
+| `__AUTHOR__`      | Author name                | `John Doe`          |
 
-**Quick Find & Replace:**
+**Automated Replacement Script:**
 
-1. Search for `__PLUGIN_SLUG__` and replace with your plugin slug
-2. Search for `__PLUGIN_NAME__` and replace with your plugin name
-3. Search for `__NAMESPACE__` and replace with your namespace (PascalCase, no underscores)
-4. Search for `__TEXT_DOMAIN__` and replace with your text domain
-5. Search for `__AUTHOR__` and replace with your name
+You can automatically update placeholders across the template using the [`agency-wp-cli`](https://github.com/miketropi/agency-wp-cli) tool.
 
-**Files to update:**
+#### Using `agency-wp-cli` via npx
 
-- `index.php` - Plugin header
+```bash
+npx github:miketropi/agency-wp-cli create plugin
+```
+
+This interactive CLI will prompt you for:
+
+- **Plugin Slug**: (e.g., `my-awesome-plugin`)
+- **Plugin Name**: (e.g., `My Awesome Plugin`)
+- **Namespace**: (e.g., `MyAwesomePlugin`)
+- **Author**
+- **Text Domain** (optional)
+
+It will update all template files, rename PHP namespaces, update block registrations, and configure project metadata.
+
+#### Manual Usage
+
+For advanced usage and options, see [agency-wp-cli documentation](https://github.com/miketropi/agency-wp-cli).
+
+**After running the CLI, review all changed files and commit to version control.**
+
+**Files to Update:**
+
+- `index.php` - Plugin header and constants
 - `package.json` - Package name
-- `src/class-plugin.php` - Namespace and class references
-- `src/blocks/blocks.php` - Function names
 - `webpack.mix.js` - Bundle names
-- `tailwind.config.js` - CSS prefix (if needed)
+- `src/class-plugin.php` - Namespace and function names
+- `src/blocks/blocks.php` - Function names
 - All PHP files in `src/` directory
 
-### Step 2: Installation
+### Step 2: Install Dependencies
 
-1. Clone or copy this template:
+```bash
+# PHP dependencies
+composer install
 
-   ```bash
-   git clone <repository-url>
-   cd your-plugin-name
-   ```
+# Node.js dependencies
+npm install
+```
 
-2. Install PHP dependencies:
+### Step 3: Environment Configuration
 
-   ```bash
-   composer install
-   ```
-
-3. Install Node.js dependencies:
-
-   ```bash
-   npm install
-   ```
-
-4. Build assets for production:
-
-   ```bash
-   npm run build
-   ```
-
-## Development Setup
-
-### Prerequisites
-
-Before starting development, ensure you have:
-
-- A local WordPress development environment
-- All dependencies installed (see [Installation](#installation))
-
-### Environment Variables
-
-Create a `.env` file in the plugin root (optional, for BrowserSync):
+Create a `.env` file for BrowserSync (optional):
 
 ```env
 WP_HOME_URL=http://your-local-site.test
 ```
 
-### Development Workflow
+## 💻 Development Workflow
 
-1. **Start development server with hot reloading:**
+### Development Commands
 
-   ```bash
-   npm run dev
-   ```
+```bash
+# Start development with hot reloading
+npm run dev              # Watches both assets and blocks
+npm run dev:watch        # Watch only Laravel Mix assets
+npm run dev:block        # Watch only Gutenberg blocks
 
-   This will:
-   - Watch for file changes in `assets/` directory
-   - Automatically rebuild assets to `dist/` directory
-   - Enable BrowserSync for live reloading (if `WP_HOME_URL` is configured)
-   - Enable React Refresh for hot reloading of React components
+# Build for production
+npm run build            # Build all assets
+npm run build:block      # Build only blocks
 
-2. **Build Gutenberg blocks:**
-
-   ```bash
-   npm run dev:block
-   ```
-
-   Or for production:
-
-   ```bash
-   npm run build:block
-   ```
-
-3. **Build for production:**
-
-   ```bash
-   npm run build
-   ```
-
-4. **Code quality checks:**
-
-   ```bash
-   # Lint and format JavaScript/TypeScript
-   npm run lint:js
-   npm run format
-
-   # Lint PHP code
-   composer lint
-   ```
-
-### Git Hooks and Automation
-
-The project uses **Husky** and **lint-staged** for automated code quality checks:
-
-- **Pre-commit hooks**: Automatically run linting and formatting on staged files
-- **JavaScript/TypeScript files**: Linted with ESLint and formatted with Prettier
-- **PHP files**: Linted with PHPCS using WordPress standards
-
-These hooks are automatically set up when you run `npm install`.
-
-## Project Structure
-
-```
-your-plugin-name/
-├── assets/                    # Frontend source assets
-│   ├── components/           # React components
-│   ├── hooks/                # React hooks
-│   ├── types/                # TypeScript type definitions
-│   ├── script.main.ts        # Main TypeScript entry point
-│   └── style.css             # Main stylesheet (Tailwind CSS)
-├── build/                     # Gutenberg blocks build output
-│   └── blocks/               # Compiled block files
-│       └── [block-name]/     # Individual block builds
-├── dist/                      # Compiled assets (build output)
-│   ├── your-plugin.main.bundle.js    # Compiled JavaScript
-│   ├── your-plugin.main.bundle.css   # Compiled CSS
-│   └── mix-manifest.json      # Laravel Mix manifest
-├── src/                       # PHP source files
-│   ├── blocks/               # Gutenberg block source files
-│   │   ├── blocks.php       # Block registration
-│   │   └── [block-name]/    # Individual block source
-│   │       ├── block.json   # Block configuration
-│   │       ├── block.jsx    # Block editor component
-│   │       ├── render.php   # Block frontend render
-│   │       └── style.css    # Block styles
-│   └── class-plugin.php      # Main plugin class
-├── tests/                     # PHPUnit tests
-│   ├── bootstrap.php        # Test bootstrap
-│   └── test-sample.php      # Sample test file
-├── vendor/                    # Composer dependencies
-├── node_modules/              # npm dependencies
-├── composer.json              # PHP dependencies configuration
-├── package.json               # Node.js dependencies configuration
-├── webpack.mix.js             # Laravel Mix configuration
-├── tailwind.config.js         # Tailwind CSS configuration
-├── eslint.config.mjs         # ESLint configuration (flat config)
-├── postcss.config.js         # PostCSS configuration
-├── tsconfig.json             # TypeScript configuration
-├── phpstan.neon              # PHPStan configuration
-├── phpunit.xml.dist          # PHPUnit configuration
-└── index.php                 # Main plugin file
+# Code quality
+npm run lint:js          # Lint JavaScript/TypeScript
+npm run lint:js:fix      # Auto-fix JS/TS issues
+npm run format           # Format with Prettier
+composer lint            # Lint PHP (PHPCS + PHPStan)
+composer lint:php        # PHPCS only
+composer lint:php:fix    # Auto-fix PHP issues
+composer lint:phpstan    # PHPStan static analysis
 ```
 
-## Building Assets
+### Development Server
+
+The `npm run dev` command runs both asset watchers concurrently:
+
+- **Laravel Mix**: Watches `assets/` directory, compiles TypeScript/React, processes Tailwind CSS
+- **WordPress Scripts**: Watches `src/blocks/` directory, compiles Gutenberg blocks
+- **BrowserSync**: Live reloads browser when files change (if `WP_HOME_URL` is set)
+
+### Git Hooks
+
+Pre-commit hooks automatically run:
+
+- ESLint + Prettier on JavaScript/TypeScript files
+- PHPCS on PHP files
+- Prettier on JSON, CSS, Markdown files
+
+Hooks are set up automatically via Husky when you run `npm install`.
+
+## 🏛️ Plugin Architecture
+
+### Plugin Bootstrap
+
+The plugin follows WordPress best practices with a clean architecture:
+
+```php
+// index.php
+namespace YourNamespace;
+
+// Constants defined
+define( 'YOUR_NAMESPACE_VERSION', '1.0.0' );
+define( 'YOUR_NAMESPACE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'YOUR_NAMESPACE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+// Initialize plugin
+$plugin = new \YourNamespace\Plugin();
+$plugin->init();
+```
+
+### Main Plugin Class
+
+The `Plugin` class handles initialization and hooks:
+
+```php
+namespace YourNamespace;
+
+class Plugin {
+    public function init() {
+        $this->includes();
+        $this->init_hooks();
+    }
+
+    private function includes() {
+        require_once YOUR_NAMESPACE_PLUGIN_DIR . 'src/blocks/blocks.php';
+    }
+
+    private function init_hooks() {
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'enqueue_block_assets', [ $this, 'enqueue_block_assets' ] );
+    }
+}
+```
+
+### Asset Enqueuing
+
+Assets are automatically enqueued using Laravel Mix's manifest file for cache-busting:
+
+```php
+public function enqueue_scripts() {
+    $manifest = json_decode(
+        file_get_contents( YOUR_NAMESPACE_PLUGIN_DIR . 'dist/mix-manifest.json' ),
+        true
+    );
+
+    wp_enqueue_script(
+        'your-plugin-main',
+        YOUR_NAMESPACE_PLUGIN_URL . 'dist' . $manifest['/your-plugin.main.bundle.js'],
+        [ 'jquery' ],
+        YOUR_NAMESPACE_VERSION,
+        true
+    );
+
+    // Localize script with data
+    wp_localize_script( 'your-plugin-main', 'yourPlugin', [
+        'ajax_url' => admin_url( 'admin-ajax.php' ),
+        'nonce'    => wp_create_nonce( 'your-plugin-nonce' ),
+    ] );
+}
+```
+
+### Available Hooks
+
+Extend the plugin using WordPress hooks:
+
+```php
+// Modify plugin initialization
+do_action( 'your_plugin_init', $plugin_instance );
+
+// Filter asset dependencies
+add_filter( 'your_plugin_script_deps', function( $deps ) {
+    $deps[] = 'custom-script';
+    return $deps;
+} );
+```
+
+## 📦 Building Assets
 
 ### Asset Pipeline
 
-The plugin uses **Laravel Mix** for asset compilation with the following features:
+**Laravel Mix** handles frontend asset compilation:
 
-- **TypeScript** → JavaScript (with React support and React Refresh for hot reloading)
-- **PostCSS** → CSS (with Tailwind CSS and Autoprefixer)
-- **Tailwind CSS**: Configured with custom `__PLUGIN_SLUG__-` prefix to avoid conflicts
-- **BrowserSync**: Live reloading for seamless development experience
+- TypeScript → JavaScript (with React support)
+- PostCSS → CSS (Tailwind CSS + Autoprefixer)
+- React Refresh for hot module replacement
+- Source maps in development
+- Minification in production
 
-#### Tailwind CSS Configuration
+**Configuration** (`webpack.mix.js`):
 
-The plugin uses Tailwind CSS with specific WordPress-friendly settings:
-
-- **Prefix**: All classes use `__PLUGIN_SLUG__-` prefix (e.g., `__PLUGIN_SLUG__-bg-blue-500`)
-- **Preflight disabled**: Prevents conflicts with WordPress core styles
-- **Content paths**: Watches `assets/`, `src/`, and main plugin file for class usage
-
-### Available Scripts
-
-#### Build Scripts
-
-- `npm run dev` - Build assets in development mode with hot reloading
-- `npm run build` - Build assets for production (minified and optimized)
-- `npm run dev:block` - Build Gutenberg blocks in development mode
-- `npm run build:block` - Build Gutenberg blocks for production
-
-#### Code Quality Scripts
-
-- `npm run lint:js` - Lint JavaScript/TypeScript files with ESLint
-- `npm run lint:js:fix` - Auto-fix JavaScript/TypeScript linting issues
-- `npm run format` - Format code with Prettier
-
-#### Development Scripts
-
-- `npm run prepare` - Set up git hooks with Husky (runs automatically after npm install)
-
-### Asset Entry Points
-
-- **JavaScript**: `assets/script.main.ts`
-- **CSS**: `assets/style.css`
-
-### Output Files
-
-Compiled assets are output to the `dist/` directory:
-
-- `dist/your-plugin.main.bundle.js`
-- `dist/your-plugin.main.bundle.css`
-
-The plugin automatically loads these files using the `dist/mix-manifest.json` for cache-busting.
-
-### Gutenberg Blocks
-
-The template includes support for custom Gutenberg blocks:
-
-1. **Create a new block**: Add a new directory in `src/blocks/` (e.g., `src/blocks/my-block/`)
-2. **Block structure**:
-   - `block.json` - Block configuration
-   - `block.jsx` - Block editor component (React)
-   - `render.php` - Block frontend render template
-   - `style.css` - Block-specific styles (optional)
-
-3. **Build blocks**: Run `npm run dev:block` or `npm run build:block`
-4. **Blocks are auto-registered**: The plugin automatically registers all blocks in `build/blocks/`
-
-Example block structure:
-
-```
-src/blocks/my-block/
-├── block.json
-├── block.jsx
-├── render.php
-└── style.css
+```javascript
+mix
+	.ts('assets/script.main.ts', 'plugin.main.bundle.js')
+	.postCss('assets/style.css', 'plugin.main.bundle.css', [
+		require('tailwindcss'),
+		require('autoprefixer'),
+	])
+	.react();
 ```
 
-## Code Quality
+### Tailwind CSS
 
-### PHP Code Standards
+Tailwind is configured with a custom prefix to avoid conflicts:
 
-The plugin follows WordPress Coding Standards and uses several tools for code quality:
+```javascript
+// tailwind.config.js
+module.exports = {
+	prefix: 'your-plugin-',
+	content: ['./assets/**/*.{js,jsx,ts,tsx}', './src/**/*.php', './index.php'],
+	corePlugins: {
+		preflight: false, // Disabled to avoid WordPress conflicts
+	},
+};
+```
 
-#### PHPCS (PHP CodeSniffer)
+**Usage in React:**
 
-Check code style:
+```tsx
+<div className="your-plugin-bg-blue-500 your-plugin-p-4">Content</div>
+```
+
+### TypeScript Configuration
+
+TypeScript is configured for React with modern ES features:
+
+```json
+{
+	"compilerOptions": {
+		"target": "ES2017",
+		"module": "ESNext",
+		"jsx": "react-jsx",
+		"lib": ["ES2017", "DOM", "DOM.Iterable"],
+		"moduleResolution": "node",
+		"skipLibCheck": true
+	}
+}
+```
+
+### Accessing WordPress Data in TypeScript
+
+The plugin localizes scripts with WordPress data:
+
+```typescript
+// TypeScript
+declare global {
+	interface Window {
+		yourPlugin: {
+			ajax_url: string;
+			nonce: string;
+		};
+	}
+}
+
+// Usage
+fetch(window.yourPlugin.ajax_url, {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+	},
+	body: new URLSearchParams({
+		action: 'your_plugin_action',
+		nonce: window.yourPlugin.nonce,
+	}),
+});
+```
+
+## 🎨 Gutenberg Blocks
+
+### Creating a New Block
+
+1. **Create block directory:**
 
 ```bash
+mkdir -p src/blocks/my-block
+```
+
+2. **Create `block.json`:**
+
+```json
+{
+	"apiVersion": 3,
+	"name": "your-plugin/my-block",
+	"title": "My Block",
+	"category": "widgets",
+	"icon": "admin-generic",
+	"textdomain": "your-plugin",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Hello World"
+		}
+	},
+	"editorScript": "file:./block.js",
+	"style": "file:./style-block.css",
+	"render": "file:./render.php"
+}
+```
+
+3. **Create `block.jsx` (Editor Component):**
+
+```jsx
+import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
+import metadata from './block.json';
+
+registerBlockType(metadata.name, {
+	edit: ({ attributes, setAttributes }) => {
+		const blockProps = useBlockProps();
+
+		return (
+			<div {...blockProps}>
+				<RichText
+					tagName="h2"
+					value={attributes.title}
+					onChange={(value) => setAttributes({ title: value })}
+					placeholder="Enter title..."
+				/>
+			</div>
+		);
+	},
+	save: ({ attributes }) => {
+		const blockProps = useBlockProps.save();
+
+		return (
+			<div {...blockProps}>
+				<RichText.Content tagName="h2" value={attributes.title} />
+			</div>
+		);
+	},
+});
+```
+
+4. **Create `render.php` (Frontend Template):**
+
+```php
+<?php
+/**
+ * Block: My Block
+ *
+ * @var array    $attributes Block attributes.
+ * @var string   $content    Block default content.
+ * @var WP_Block $block      Block instance.
+ */
+
+$title = $attributes['title'] ?? 'Hello World';
+?>
+
+<div class="wp-block-your-plugin-my-block">
+    <h2><?php echo esc_html( $title ); ?></h2>
+</div>
+```
+
+5. **Build the block:**
+
+```bash
+npm run build:block
+```
+
+### Block Registration
+
+Blocks are automatically registered from `build/blocks/`:
+
+```php
+// src/blocks/blocks.php
+function your_plugin_register_blocks() {
+    $blocks_dir = YOUR_NAMESPACE_PLUGIN_DIR . 'build/blocks';
+
+    foreach ( glob( $blocks_dir . '/*' ) as $block_dir ) {
+        if ( is_dir( $block_dir ) ) {
+            register_block_type( $block_dir . '/block.json' );
+        }
+    }
+}
+add_action( 'init', 'your_plugin_register_blocks' );
+```
+
+### Block Attributes & Supports
+
+Define block capabilities in `block.json`:
+
+```json
+{
+	"supports": {
+		"align": ["wide", "full"],
+		"anchor": true,
+		"customClassName": false,
+		"html": false
+	},
+	"attributes": {
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": "p"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "none"
+		}
+	}
+}
+```
+
+## ✅ Code Quality & Standards
+
+### PHP Standards
+
+**WordPress Coding Standards (WPCS):**
+
+```bash
+# Check code style
 composer lint:php
-```
 
-Auto-fix code style issues:
-
-```bash
+# Auto-fix issues
 composer lint:php:fix
 ```
 
-#### PHPStan (Static Analysis)
-
-Run static analysis:
+**PHPStan Static Analysis:**
 
 ```bash
+# Run static analysis (Level 5)
 composer lint:phpstan
 ```
 
-Run all PHP linting checks:
+**Configuration:**
 
-```bash
-composer lint
+- PHPCS: WordPress Coding Standards (WPCS)
+- PHPStan: Level 5 with WordPress stubs
+- PHP Compatibility: PHP 8.2+
+
+### JavaScript/TypeScript Standards
+
+**ESLint Configuration:**
+
+```javascript
+// eslint.config.mjs (flat config)
+export default [
+	{
+		files: ['**/*.{js,jsx,ts,tsx}'],
+		languageOptions: {
+			parser: typescriptParser,
+			parserOptions: {
+				ecmaVersion: 'latest',
+				sourceType: 'module',
+				ecmaFeatures: { jsx: true },
+			},
+		},
+		plugins: {
+			react: reactPlugin,
+			'@typescript-eslint': typescriptEslint,
+		},
+		rules: {
+			// Custom rules
+		},
+	},
+];
 ```
 
-### JavaScript/TypeScript Code Standards
+**Prettier Integration:**
 
-The plugin uses modern linting and formatting tools for frontend code:
+Prettier is integrated with ESLint for consistent formatting. Format on save is recommended in your editor.
 
-#### ESLint (JavaScript/TypeScript Linting)
+### Pre-commit Hooks
 
-Check JavaScript/TypeScript code style:
+Husky + lint-staged automatically run:
 
-```bash
-npm run lint:js
+```json
+{
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+		"*.php": ["composer lint"]
+	}
+}
 ```
 
-Auto-fix JavaScript/TypeScript issues:
+## 🧪 Testing
+
+### PHPUnit Setup
 
 ```bash
-npm run lint:js:fix
-```
-
-#### Prettier (Code Formatting)
-
-Format all code files:
-
-```bash
-npm run format
-```
-
-### Configuration Files
-
-#### PHP
-
-- **PHPCS**: Uses WordPress Coding Standards (WPCS)
-- **PHPStan**: Configured in `phpstan.neon` (level 5)
-- **PHP Compatibility**: Checks for PHP 8.2+ compatibility
-
-#### JavaScript/TypeScript
-
-- **ESLint**: Configured in `eslint.config.mjs` (modern flat config format)
-- **Prettier**: Integrated with ESLint for consistent formatting
-- **TypeScript**: Configured in `tsconfig.json` with React JSX support and type management
-- **Tailwind CSS**: Configured in `tailwind.config.js` with `your-plugin-` prefix (replace with your plugin slug) and WordPress-friendly settings
-- **PostCSS**: Configured in `postcss.config.js` with Tailwind and Autoprefixer plugins
-
-### CI/CD
-
-GitHub Actions automatically runs linting on push and pull requests:
-
-- PHPCS code style checks for PHP
-- PHPStan static analysis for PHP
-- ESLint checks for JavaScript/TypeScript
-- Prettier formatting checks
-
-## Testing
-
-### PHPUnit
-
-The plugin includes PHPUnit for PHP testing:
-
-```bash
+# Run tests
 vendor/bin/phpunit
+
+# Run with coverage
+vendor/bin/phpunit --coverage-html coverage/
 ```
 
-Test files are located in the `tests/` directory.
+**Test Structure:**
 
-### Test Configuration
-
-- Configuration: `phpunit.xml.dist`
-- Bootstrap: `tests/bootstrap.php`
-
-## Contributing
-
-### Development Guidelines
-
-1. **Follow WordPress Coding Standards** - Use the provided linting tools
-2. **Write Tests** - Add tests for new features
-3. **Document Code** - Use PHPDoc comments for all functions and classes
-4. **Keep Dependencies Updated** - Regularly update Composer and npm dependencies
-
-### Code Style
-
-- PHP: WordPress Coding Standards (enforced via PHPCS)
-- JavaScript/TypeScript: Follow React and TypeScript best practices, ESLint enforced
-- CSS: Use Tailwind CSS utility classes with `your-plugin-` prefix (replace with your plugin slug), avoid custom CSS when possible
-- TypeScript: Configured with React JSX support, modern ES2017+ target, and type checking optimizations
-
-### Pull Request Process
-
-1. Create a feature branch from `main` or `master`
-2. Make your changes
-3. Ensure all tests pass
-4. Run linting tools and fix any issues
-5. Submit a pull request with a clear description
-
-## Troubleshooting
-
-### Common Issues
-
-#### TypeScript Type Definition Errors
-
-If you encounter missing type definition errors (e.g., `Cannot find type definition file for 'minimatch'`):
-
-```bash
-# Install missing type definitions
-npm install @types/[package-name] --save-dev
-
-# Or if TypeScript is being overly strict, you can use skipLibCheck
-# This is already enabled in tsconfig.json
+```php
+// tests/test-sample.php
+class Test_Sample extends WP_UnitTestCase {
+    public function test_example() {
+        $this->assertTrue( true );
+    }
+}
 ```
 
-#### Build Issues
+### Writing Tests
 
-If Laravel Mix compilation fails:
+```php
+class Test_Plugin_Class extends WP_UnitTestCase {
+    public function setUp(): void {
+        parent::setUp();
+        $this->plugin = new \YourNamespace\Plugin();
+    }
+
+    public function test_plugin_initializes() {
+        $this->plugin->init();
+        $this->assertTrue( has_action( 'wp_enqueue_scripts' ) );
+    }
+}
+```
+
+## 🔌 Extending the Plugin
+
+### Adding Custom Functionality
+
+1. **Create a new class:**
+
+```php
+// src/class-custom-feature.php
+namespace YourNamespace;
+
+class Custom_Feature {
+    public function __construct() {
+        add_action( 'init', [ $this, 'init' ] );
+    }
+
+    public function init() {
+        // Your code
+    }
+}
+```
+
+2. **Include in main plugin:**
+
+```php
+// src/class-plugin.php
+private function includes() {
+    require_once YOUR_NAMESPACE_PLUGIN_DIR . 'src/blocks/blocks.php';
+    require_once YOUR_NAMESPACE_PLUGIN_DIR . 'src/class-custom-feature.php';
+}
+
+private function init_hooks() {
+    // ...
+    new Custom_Feature();
+}
+```
+
+### Adding React Components
+
+```tsx
+// assets/components/MyComponent.tsx
+import React from 'react';
+
+interface MyComponentProps {
+	title: string;
+}
+
+export const MyComponent: React.FC<MyComponentProps> = ({ title }) => {
+	return <div className="your-plugin-container">{title}</div>;
+};
+```
+
+```typescript
+// assets/script.main.ts
+import { MyComponent } from './components/MyComponent';
+import { createRoot } from 'react-dom/client';
+
+const container = document.getElementById('my-app');
+if (container) {
+    const root = createRoot(container);
+    root.render(<MyComponent title="Hello" />);
+}
+```
+
+### Custom WordPress Hooks
+
+Add your own hooks for extensibility:
+
+```php
+// In your class
+do_action( 'your_plugin_before_render', $data );
+
+// In another plugin/theme
+add_action( 'your_plugin_before_render', function( $data ) {
+    // Modify $data
+}, 10, 1 );
+```
+
+## 🐛 Debugging
+
+### PHP Debugging
+
+Enable WordPress debug mode:
+
+```php
+// wp-config.php
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );
+```
+
+### JavaScript Debugging
+
+Source maps are enabled in development:
+
+```javascript
+// webpack.mix.js
+if (mix.inProduction()) {
+	mix.sourceMaps();
+}
+```
+
+### React DevTools
+
+Install React Developer Tools browser extension for component inspection.
+
+### Browser Console
+
+Access localized data:
+
+```javascript
+console.log(window.yourPlugin);
+// { ajax_url: "...", nonce: "..." }
+```
+
+## 🔧 Troubleshooting
+
+### Build Issues
+
+**Laravel Mix fails to compile:**
 
 ```bash
-# Clear node_modules and reinstall
-rm -rf node_modules package-lock.json
+# Clear cache and reinstall
+rm -rf node_modules package-lock.json dist/
 npm install
-
-# Clear Mix cache
-rm -rf dist/
 npm run build
 ```
 
-#### BrowserSync Issues
-
-If live reloading doesn't work:
-
-1. Ensure `WP_HOME_URL` is set in your `.env` file
-2. Check that your local development URL is accessible
-3. Verify that the WordPress site is running
-
-#### Git Hooks Not Working
-
-If pre-commit hooks aren't running:
+**TypeScript errors:**
 
 ```bash
-# Reinstall Husky hooks
-npm run prepare
+# Check TypeScript config
+npx tsc --noEmit
+
+# Install missing types
+npm install --save-dev @types/[package-name]
 ```
 
-#### Gutenberg Blocks Not Appearing
+### Gutenberg Blocks
 
-If your custom blocks aren't showing up in the editor:
+**Block not appearing in editor:**
 
-1. Ensure blocks are built: `npm run build:block`
-2. Check that `build/blocks/` directory exists and contains your block
-3. Verify `block.json` is valid JSON
-4. Clear WordPress cache and browser cache
-5. Check browser console for JavaScript errors
+1. Verify block is built: `npm run build:block`
+2. Check `build/blocks/[block-name]/block.json` exists
+3. Clear browser cache
+4. Check browser console for errors
+5. Verify block name in `block.json` matches directory
 
-#### Placeholder Replacement Issues
+**Block styles not loading:**
 
-If you're seeing placeholder text in your plugin:
+- Ensure `style` property is set in `block.json`
+- Check that `style-block.css` exists in build directory
+- Verify block is registered correctly
 
-1. Use a find-and-replace tool to search all files
-2. Make sure to replace in all file types (PHP, JS, TS, JSON, etc.)
-3. Check `package.json`, `composer.json`, and all config files
-4. Verify namespace consistency in PHP files
+### PHP Issues
 
-## Additional Resources
+**PHPStan errors:**
+
+```bash
+# Increase memory limit
+composer lint:phpstan -- --memory-limit=1G
+
+# Check specific file
+vendor/bin/phpstan analyse src/class-plugin.php
+```
+
+**PHPCS errors:**
+
+```bash
+# Show detailed output
+composer lint:php -- -v
+
+# Check specific file
+vendor/bin/phpcs src/class-plugin.php
+```
+
+### BrowserSync Not Working
+
+1. Verify `.env` file exists with `WP_HOME_URL`
+2. Check URL is accessible
+3. Ensure WordPress is running
+4. Check BrowserSync console for errors
+
+## 📚 Additional Resources
 
 - [WordPress Plugin Handbook](https://developer.wordpress.org/plugins/)
+- [Gutenberg Block Development](https://developer.wordpress.org/block-editor/)
 - [Laravel Mix Documentation](https://laravel-mix.com/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [React Documentation](https://react.dev/)
 - [ESLint Flat Config](https://eslint.org/docs/latest/use/configure/configuration-files-new)
+- [PHPStan Documentation](https://phpstan.org/user-guide/getting-started)
+
+## 📝 Requirements
+
+- **WordPress**: 6.0+
+- **PHP**: 8.2+
+- **Node.js**: v20.x+
+- **Composer**: Latest
+
+## 📄 License
+
+GPL v2 or later
