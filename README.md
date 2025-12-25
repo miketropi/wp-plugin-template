@@ -17,7 +17,7 @@
 
 - **WordPress**: 6.0 or higher
 - **PHP**: 8.2 or higher
-- **Node.js**: v24.x (recommended)
+- **Node.js**: v20.x or higher
 - **Composer**: Latest version
 
 ## Installation

@@ -44,14 +44,8 @@ if ( file_exists( __NAMESPACE___PLUGIN_DIR . 'vendor/autoload.php' ) ) {
 }
 
 // Initialize plugin.
-add_action(
-	'plugins_loaded',
-	function () {
+require_once __NAMESPACE___PLUGIN_DIR . 'src/class-plugin.php';
 
-		// include plugin file.
-		require_once __NAMESPACE___PLUGIN_DIR . 'src/class-plugin.php';
-
-		$plugin = new \__NAMESPACE__\Plugin();
-		$plugin->init();
-	}
-);
+// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+$plugin = new \__NAMESPACE__\Plugin();
+$plugin->init();

@@ -1,0 +1,17 @@
+{
+	"apiVersion": 3,
+	"name": "wp-plugin-template/test",
+	"title": "Test Block",
+	"category": "widgets",
+	"icon": "admin-generic",
+	"textdomain": "__TEXT_DOMAIN__",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Test Block"
+		}
+	},
+	"editorScript": "file:./block.js",
+	"style": "file:./style-block.css",
+	"render": "file:./render.php"
+}

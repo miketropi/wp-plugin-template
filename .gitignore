@@ -9,3 +9,5 @@ vendor/
 *.tar.gz
 *.zip
 .env
+build/
+dist/
