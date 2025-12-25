@@ -11,7 +11,7 @@
  *
  * @return void
  */
-add_action( 'init', '__PLUGIN_SLUG___register_blocks' );
+add_action( 'init', '__PLUGIN_SLUG_FLAT___register_blocks' );
 
 /**
  * Register blocks
@@ -19,7 +19,7 @@ add_action( 'init', '__PLUGIN_SLUG___register_blocks' );
  * @return void
  */
 //phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore, WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid, Squiz.Commenting.FunctionComment.Missing
-function __PLUGIN_SLUG___register_blocks() {
+function __PLUGIN_SLUG_FLAT___register_blocks() {
 	$blocks_build_dir = __NAMESPACE___PLUGIN_DIR . 'build/blocks';
 
 	// if no blocks, return.
