@@ -11,7 +11,7 @@ cd your-plugin-name
 
 # 2. Replace placeholders (see below)
 # 3. Install dependencies
-composer install && npm install
+composer install && npm install --legacy-peer-deps
 
 # 4. Start development
 npm run dev
